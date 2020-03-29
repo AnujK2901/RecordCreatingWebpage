@@ -1,0 +1,80 @@
+<html>
+<head>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" rel="stylesheet" type="text/css"/>
+    <title>Login Page</title>
+</head>
+<body>
+<div id="loader">Loading...
+    <div aria-label="Example Progress Bar" aria-valuemax="1" aria-valuemin="0" aria-valuenow="0"
+         class="mdc-linear-progress" role="progressbar">
+        <div class="mdc-linear-progress__buffer">
+            <div class="mdc-linear-progress__buffer-bar"></div>
+            <div class="mdc-linear-progress__buffer-dots"></div>
+        </div>
+        <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+            <span class="mdc-linear-progress__bar-inner"></span>
+        </div>
+        <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+            <span class="mdc-linear-progress__bar-inner"></span>
+        </div>
+    </div>
+</div>
+<div id="firebaseui-auth-container" style="margin-top: 16px"></div>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-auth.js"></script>
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyBGY4NpDEHkD68H0XefnJwO1Vcbpkl7dig",
+        authDomain: "questionresourceproject.firebaseapp.com",
+        databaseURL: "https://questionresourceproject.firebaseio.com",
+        projectId: "questionresourceproject",
+        storageBucket: "questionresourceproject.appspot.com",
+        messagingSenderId: "847234346392",
+        appId: "1:847234346392:web:c6c5a20d13ee3a2fc44fed",
+        measurementId: "G-ZJTW3XLT5R"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+    //Handle Account Status
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            window.location = 'index.html'; //After successful login, user will be redirected to home.html
+        } else {
+            // Initialize the FirebaseUI Widget using Firebase.
+            var ui = new firebaseui.auth.AuthUI(firebase.auth());
+            ui.start('#firebaseui-auth-container', {
+                callbacks: {
+                    signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+                        // User successfully signed in.
+                        // Return type determines whether we continue the redirect automatically
+                        // or whether we leave that to developer to handle.
+                        return true;
+                    },
+                    uiShown: function () {
+                        // The widget is rendered.
+                        // Hide the loader.
+                        document.getElementById('loader').style.display = 'none';
+                    }
+                },
+                signInFlow: 'popup',
+                signInOptions: [
+                    firebase.auth.EmailAuthProvider.PROVIDER_ID
+                ],
+                signInSuccessUrl: './index.html'
+            });
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <html>
 <head>
   <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
@@ -12,4 +13,143 @@
 <script>
 mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
 </script>
+=======
+<!DOCTYPE html>
+<html lang="html">
+<head>
+    <link href="dist/bundle.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Welcome!</title>
+</head>
+<body>
+<script src="code.js" type="text/javascript"></script>
+<header class=" mdc-top-app-bar mdc-top-app-bar--fixed" style="left:0; top:0;">
+    <div class="mdc-top-app-bar__row">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+            <span class="mdc-top-app-bar__title">Add Content to Database</span></section>
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+            <button aria-label="Log Out" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded"
+                    onclick="firebase.auth().signOut().then(function() {
+  // Sign-out successful.
+  window.location = 'login.html';
+}).catch(function(error) {
+  // An error happened.
+  console.log('Sign out Error');
+});">
+                highlight_off
+            </button>
+        </section>
+    </div>
+</header>
+<div class="mdc-top-app-bar--fixed-adjust" id="myContent" style="display: none;">
+    <div class="row">
+        <div class="column">
+            <div class="mdc-text-field mdc-text-field--outlined exam">
+                <input class="mdc-text-field__input" id="text-field-exam" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label class="mdc-floating-label" for="text-field-exam">Exam</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="mdc-text-field mdc-text-field--outlined subject">
+                <input class="mdc-text-field__input" id="text-field-subject" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label class="mdc-floating-label" for="text-field-subject">Subject</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="mdc-text-field mdc-text-field--outlined chapter">
+                <input class="mdc-text-field__input" id="text-field-chapter" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label class="mdc-floating-label" for="text-field-chapter">Chapter</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="mdc-text-field mdc-text-field--outlined lesson">
+                <input class="mdc-text-field__input" id="text-field-lesson" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label class="mdc-floating-label" for="text-field-lesson">Lesson</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="mdc-text-field mdc-text-field--outlined topic">
+                <input class="mdc-text-field__input" id="text-field-topic" required>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label class="mdc-floating-label" for="text-field-topic">Topic</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="text-field-row question-text">
+                <div class="text-field-container">
+                    <div class="mdc-text-field text-field  mdc-text-field--no-label mdc-text-field--textarea">
+                        <textarea class="mdc-text-field__input" id="text-field-textarea-helper"></textarea>
+                        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                            <div class="mdc-notched-outline__leading">
+                            </div>
+                            <div class="mdc-notched-outline__notch" style="">
+                                <label class="mdc-floating-label" for="text-field-textarea-helper" style="">Text From
+                                    Question Image</label></div>
+                            <div class="mdc-notched-outline__trailing"></div>
+                        </div>
+                    </div>
+                    <div class="mdc-text-field-helper-line">
+                        <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent mdc-text-field-helper-text--validation-msg"
+                           id="text-field-textarea-helper-helper-text">The text in this box would be automatically
+                            populated</p></div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <img height="40%" src="image/flower.jpg" width="40%"><br>
+            <img height="40%" src="image/flower.jpg" width="40%">
+            <p></p>
+            <button class="mdc-button mdc-button--outlined save-button" onclick="myfun()">
+                <span class="mdc-button__ripple"></span>Save and Next
+            </button>
+        </div>
+    </div>
+    <div class="mdc-snackbar">
+        <div class="mdc-snackbar__surface">
+            <div class="mdc-snackbar__label"
+                 role="status"
+                 aria-live="polite">
+                Can't send photo. Retry in 5 seconds.
+            </div>
+            <div class="mdc-snackbar__actions">
+                <button type="button" class="mdc-button mdc-snackbar__action">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Retry</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script async src="dist/bundle.js"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script defer src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script defer src="https://www.gstatic.com/firebasejs/7.13.1/firebase-analytics.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/7.13.1/firebase-database.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/7.13.1/firebase-auth.js"></script>
+
+<script defer src="./init-firebase.js"></script>
+</body>
+>>>>>>> Stashed changes
 </html>
