@@ -1,47 +1,31 @@
 <html>
 <head>
-  <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
-  <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
-   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-   <title>Welcome!</title>
-</head>
-<body>
-<button class="mdc-button mdc-button--outlined foo-button">
-  <span class="mdc-button__ripple"></span>Save and Next</button>
-</body>
-<script>
-mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
-</script>
-=======
-<!DOCTYPE html>
-<html lang="html">
-<head>
-    <link href="dist/bundle.css" rel="stylesheet">
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" rel="stylesheet" type="text/css"/>
+    <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="dist/bundle.css" rel="stylesheet">
     <title>Welcome!</title>
 </head>
 <body>
-<script src="code.js" type="text/javascript"></script>
+
 <header class=" mdc-top-app-bar mdc-top-app-bar--fixed" style="left:0; top:0;">
     <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <span class="mdc-top-app-bar__title">Add Content to Database</span></section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
             <button aria-label="Log Out" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded"
-                    onclick="firebase.auth().signOut().then(function() {
-  // Sign-out successful.
-  window.location = 'login.html';
-}).catch(function(error) {
-  // An error happened.
-  console.log('Sign out Error');
-});">
-                highlight_off
+                    onclick="signOut()">highlight_off
             </button>
         </section>
     </div>
 </header>
-<div class="mdc-top-app-bar--fixed-adjust" id="myContent" style="display: none;">
-    <div class="row">
+<div class="mdc-top-app-bar--fixed-adjust">
+    <div id="loader">Loading...</div>
+    <div id="firebaseui-auth-container" style="margin-top: 16px"></div>
+
+    <div class="row" id="myContent" style="display: none;">
         <div class="column">
             <div class="mdc-text-field mdc-text-field--outlined exam">
                 <input class="mdc-text-field__input" id="text-field-exam" required>
@@ -101,7 +85,8 @@ mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
                             <div class="mdc-notched-outline__leading">
                             </div>
                             <div class="mdc-notched-outline__notch" style="">
-                                <label class="mdc-floating-label" for="text-field-textarea-helper" style="">Text From
+                                <label class="mdc-floating-label" for="text-field-textarea-helper" style="">Text
+                                    From
                                     Question Image</label></div>
                             <div class="mdc-notched-outline__trailing"></div>
                         </div>
@@ -114,7 +99,14 @@ mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
             </div>
         </div>
         <div class="column">
-            <img height="40%" src="image/flower.jpg" width="40%"><br>
+            <img height="40%" src="image/flower.jpg" width="40%">
+            <!-- <label for="avatar">Choose a profile picture:</label>-->
+
+            <input accept="image/png, image/jpeg"
+                   id="avatar" name="avatar"
+                   type="file">
+            <!--            <button class="mdc-button mdc-button--raised"><span class="mdc-button__ripple"></span> Choose File</button>-->
+            <br>
             <img height="40%" src="image/flower.jpg" width="40%">
             <p></p>
             <button class="mdc-button mdc-button--outlined save-button" onclick="myfun()">
@@ -122,17 +114,18 @@ mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
             </button>
         </div>
     </div>
+
 </div>
 <script async src="dist/bundle.js"></script>
+<script async src="code.js" type="text/javascript"></script>
 <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script defer src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script defer src="https://www.gstatic.com/firebasejs/7.13.1/firebase-analytics.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/7.13.1/firebase-database.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/7.13.1/firebase-auth.js"></script>
-
-<script defer src="./init-firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-auth.js"></script>
+<script src="./init-firebase.js"></script>
 </body>
 </html>
