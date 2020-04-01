@@ -17,6 +17,7 @@ firebase.database();
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
         document.getElementById("myContent").style.display = "block";
+        document.getElementById("log-out").style.display = "block";
         document.getElementById('loader').style.display = 'none';
         document.getElementById('firebaseui-auth-container').style.display = 'none';
         //console.log(firebase.auth().currentUser.email);
@@ -32,7 +33,7 @@ firebase.auth().onAuthStateChanged(user => {
                     // Return type determines whether we continue the redirect automatically
                     // or whether we leave that to developer to handle.
                     if (authResult.additionalUserInfo.isNewUser) {
-                        firebase.auth().currentUser.delete()
+                        firebase.auth().currentUser.delete();
                         signOut()
                     }
                     ui.delete();
@@ -42,6 +43,7 @@ firebase.auth().onAuthStateChanged(user => {
                 uiShown: function () {
                     // The widget is rendered.
                     // Hide the loader.
+                    document.getElementById("log-out").style.display = "none";
                     document.getElementById('loader').style.display = 'none';
                 }
             },

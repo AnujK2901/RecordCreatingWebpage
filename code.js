@@ -1,8 +1,3 @@
-function myfun() {
-    console.log("Hello Anuj");
-    //validate();
-}
-
 function signOut() {
     firebase.auth().signOut().then(function () {
         // Sign-out successful.

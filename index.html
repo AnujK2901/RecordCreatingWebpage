@@ -5,10 +5,12 @@
     <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
     <link href="dist/bundle.css" rel="stylesheet">
     <title>Welcome!</title>
 </head>
-<body>
+<body class="mdc-typography">
 
 <header class=" mdc-top-app-bar mdc-top-app-bar--fixed" style="left:0; top:0;">
     <div class="mdc-top-app-bar__row">
@@ -16,6 +18,7 @@
             <span class="mdc-top-app-bar__title">Add Content to Database</span></section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
             <button aria-label="Log Out" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded"
+                    id="log-out"
                     onclick="signOut()">highlight_off
             </button>
         </section>
@@ -80,13 +83,12 @@
             <div class="text-field-row question-text">
                 <div class="text-field-container">
                     <div class="mdc-text-field text-field  mdc-text-field--no-label mdc-text-field--textarea">
-                        <textarea class="mdc-text-field__input" id="text-field-textarea-helper"></textarea>
+                        <textarea class="mdc-text-field__input" id="text-field-textarea-helper" required></textarea>
                         <div class="mdc-notched-outline mdc-notched-outline--upgraded">
                             <div class="mdc-notched-outline__leading">
                             </div>
                             <div class="mdc-notched-outline__notch" style="">
-                                <label class="mdc-floating-label" for="text-field-textarea-helper" style="">Text
-                                    From
+                                <label class="mdc-floating-label" for="text-field-textarea-helper" style="">Text From
                                     Question Image</label></div>
                             <div class="mdc-notched-outline__trailing"></div>
                         </div>
@@ -99,25 +101,68 @@
             </div>
         </div>
         <div class="column">
-            <img height="40%" src="image/flower.jpg" width="40%">
-            <!-- <label for="avatar">Choose a profile picture:</label>-->
+            <p><img height="20%" id="questionImage" src="image/noImageSelected.jpg"  width="20%"><br>
+                <label for="questionImageButton">Select Image For Question:</label>
 
-            <input accept="image/png, image/jpeg"
-                   id="avatar" name="avatar"
-                   type="file">
-            <!--            <button class="mdc-button mdc-button--raised"><span class="mdc-button__ripple"></span> Choose File</button>-->
-            <br>
-            <img height="40%" src="image/flower.jpg" width="40%">
-            <p></p>
-            <button class="mdc-button mdc-button--outlined save-button" onclick="myfun()">
+                <input accept="image/png, image/jpeg"
+                       id="questionImageInput" name="questionImageInput"
+                        type="file"style="display: none;">
+                <button class="mdc-button mdc-button--raised questionImageButton" id="questionImageButton"><span
+                        class="mdc-button__ripple"></span>Choose File
+                </button>
+            </p>
+            <p><img height="20%" id="answerImage" src="image/noImageSelected.jpg"  width="20%"><br>
+                <label for="answerImageButton">Select Image For Answer:</label>
+
+                <input accept="image/png, image/jpeg"style="display: none;"
+                       id="answerImageInput" name="answerImageInput"
+                        type="file">
+
+                <button class="mdc-button mdc-button--raised answerImageButton" id="answerImageButton"><span
+                        class="mdc-button__ripple"></span>Choose File
+                </button>
+            </p>
+            <button class="mdc-button mdc-button--outlined save-button" >
                 <span class="mdc-button__ripple"></span>Save and Next
             </button>
         </div>
     </div>
-
+    <div class="mdc-snackbar snackbar1">
+        <div class="mdc-snackbar__surface">
+            <div aria-live="polite"
+                 class="mdc-snackbar__label"
+                 role="status">Sending Data
+            </div>
+            <div class="mdc-snackbar__actions">
+                <button class="mdc-icon-button mdc-snackbar__dismiss material-icons" title="Dismiss">close</button>
+            </div>
+        </div>
+    </div>
+    <div class="mdc-snackbar snackbar2">
+        <div class="mdc-snackbar__surface">
+            <div aria-live="polite"
+                 class="mdc-snackbar__label"
+                 role="status">Data Uploaded Successfully
+            </div>
+            <div class="mdc-snackbar__actions">
+                <button class="mdc-icon-button mdc-snackbar__dismiss material-icons" title="Dismiss">close</button>
+            </div>
+        </div>
+    </div>
+    <div class="mdc-snackbar snackbar3">
+        <div class="mdc-snackbar__surface">
+            <div aria-live="polite"
+                 class="mdc-snackbar__label"
+                 role="status">Invalid Inputs
+            </div>
+            <div class="mdc-snackbar__actions">
+                <button class="mdc-icon-button mdc-snackbar__dismiss material-icons" title="Dismiss">close</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script async src="dist/bundle.js"></script>
-<script async src="code.js" type="text/javascript"></script>
+<script async src="code.js"></script>
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
 
