@@ -34,7 +34,7 @@ firebase.auth().onAuthStateChanged(user => {
                     // or whether we leave that to developer to handle.
                     if (authResult.additionalUserInfo.isNewUser) {
                         firebase.auth().currentUser.delete();
-                        signOut()
+                        signOut();
                     }
                     ui.delete();
                     document.getElementById("myContent").style.display = 'block';

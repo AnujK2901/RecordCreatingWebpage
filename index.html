@@ -101,28 +101,28 @@
             </div>
         </div>
         <div class="column">
-            <p><img height="20%" id="questionImage" src="image/noImageSelected.jpg"  width="20%"><br>
+            <p><img height="20%" id="questionImage" src="image/noImageSelected.jpg" width="20%"><br>
                 <label for="questionImageButton">Select Image For Question:</label>
 
                 <input accept="image/png, image/jpeg"
                        id="questionImageInput" name="questionImageInput"
-                        type="file"style="display: none;">
+                       style="display: none;" type="file">
                 <button class="mdc-button mdc-button--raised questionImageButton" id="questionImageButton"><span
                         class="mdc-button__ripple"></span>Choose File
                 </button>
             </p>
-            <p><img height="20%" id="answerImage" src="image/noImageSelected.jpg"  width="20%"><br>
+            <p><img height="20%" id="answerImage" src="image/noImageSelected.jpg" width="20%"><br>
                 <label for="answerImageButton">Select Image For Answer:</label>
 
-                <input accept="image/png, image/jpeg"style="display: none;"
-                       id="answerImageInput" name="answerImageInput"
-                        type="file">
+                <input accept="image/png, image/jpeg" id="answerImageInput"
+                       name="answerImageInput" style="display: none;"
+                       type="file">
 
                 <button class="mdc-button mdc-button--raised answerImageButton" id="answerImageButton"><span
                         class="mdc-button__ripple"></span>Choose File
                 </button>
             </p>
-            <button class="mdc-button mdc-button--outlined save-button" >
+            <button class="mdc-button mdc-button--outlined save-button">
                 <span class="mdc-button__ripple"></span>Save and Next
             </button>
         </div>
@@ -170,6 +170,7 @@
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-storage.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-auth.js"></script>
 <script src="./init-firebase.js"></script>
 </body>

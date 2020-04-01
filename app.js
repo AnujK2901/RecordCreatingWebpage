@@ -5,6 +5,15 @@ import {MDCSnackbar} from '@material/snackbar';
 
 let questionFileValid = false;
 let answerFileValid = false;
+let selectedQuestionFile = null;
+let selectedAnswerFile = null;
+let answerImageUploadURL = null;
+let questionImageUploadURL = null;
+let selectedQuestionFileName = null;
+let selectedAnswerFileName = null;
+let selectedQuestionFileMetadata = null;
+let selectedAnswerFileMetadata = null;
+
 const snackbar1 = new MDCSnackbar(document.querySelector('.snackbar1'));
 const snackbar2 = new MDCSnackbar(document.querySelector('.snackbar2'));
 const snackbar3 = new MDCSnackbar(document.querySelector('.snackbar3'));
@@ -31,32 +40,39 @@ const answerImageButton = document.getElementById("answerImageButton");
 saveButton.addEventListener('click', () => {
     if (validate()) {
         uiDisabled(true);
+        snackbar1.timeoutMs = -1;
         snackbar1.open();
-        firebase.database().ref('data').push({
-            exam: exam.value,
-            subject: subject.value,
-            chapter: chapter.value,
-            lesson: lesson.value,
-            topic: topic.value,
-            textFromQuestionImage: questionText.value
-        }, function (error) {
-            if (error) {
-                uiDisabled(false);
-                //Push Failed
-                snackbar1.close();
-                snackbar2.labelText = "Uploading Data Failed";
-                snackbar2.open();
-            } else {
-                uiDisabled(false);
-                //Push Success
-                snackbar1.close();
-                snackbar2.labelText = "Data Uploaded Successfully";
-                snackbar2.open();
-                clearText();
-                clearImages();
+        // Get a reference to the storage service, which is used to create references in your storage bucket
+        var storage = firebase.storage().ref();
 
-            }
-        });
+        // Create a storage reference from our storage service
+        let storageRef = storage.child('images');
+
+        const QuestionImageUploadTask = storageRef.child(selectedQuestionFileName).put(selectedQuestionFile, selectedQuestionFileMetadata);
+        const AnswerImageUploadTask = storageRef.child(selectedAnswerFileName).put(selectedAnswerFile, selectedAnswerFileMetadata);
+        QuestionImageUploadTask
+            .then(snapshot => snapshot.ref.getDownloadURL())
+            .then((url) => {
+                questionImageUploadURL = url;
+                AnswerImageUploadTask
+                    .then(snapshot => snapshot.ref.getDownloadURL())
+                    .then((url) => {
+                        answerImageUploadURL = url;
+                        pushData();
+                    })
+                    .catch((error) => {
+                        failed();
+                        console.log('AnswerImageUploadTaskError');
+                        console.log(error);
+                    });
+            })
+            .catch((error) => {
+                failed();
+                console.log('QuestionImageUploadTaskError');
+                console.log(error);
+            });
+
+
     } else {
         snackbar3.open();
         if (!exam.valid) {
@@ -117,23 +133,33 @@ function uiDisabled(booleanValue) {
     lesson.disabled = booleanValue;
     topic.disabled = booleanValue;
     questionText.disabled = booleanValue;
-    saveButtonRipple.disabled = booleanValue;
-    questionButtonRipple.disabled = booleanValue;
-    answerButtonRipple.disabled = booleanValue;
+    saveButton.disabled = booleanValue;
+    questionImageButton.disabled = booleanValue;
+    answerImageButton.disabled = booleanValue;
 }
 
 function clearText() {
     exam.value = '';
+    exam.valid = true;
     subject.value = '';
+    subject.valid = true;
     chapter.value = '';
+    chapter.valid = true;
     lesson.value = '';
+    lesson.valid = true;
     topic.value = '';
+    topic.valid = true;
     questionText.value = '';
+    questionText.valid = true;
 }
 
 function clearImages() {
     questionFileValid = false;
     answerFileValid = false;
+    selectedQuestionFile = null;
+    selectedAnswerFile = null;
+    answerImageUploadURL = null;
+    questionImageUploadURL = null;
     document.getElementById('questionImageInput').value = "";
     document.getElementById('answerImageInput').value = "";
     document.getElementById("answerImage").src = "image/noImageSelected.jpg";
@@ -142,7 +168,9 @@ function clearImages() {
 
 function handleQuestionFiles() {
     if (document.getElementById('questionImageInput').files.length === 1) {
-        const selectedQuestionFile = document.getElementById('questionImageInput').files[0];
+        selectedQuestionFile = document.getElementById('questionImageInput').files[0];
+        selectedQuestionFileName = (+new Date()) + '-' + selectedQuestionFile.name;
+        selectedQuestionFileMetadata = {contentType: selectedQuestionFile.type};
         document.getElementById("questionImage").style.display = 'block';
         document.getElementById("questionImage").style.width = "20%";
         document.getElementById("questionImage").style.height = "20%";
@@ -159,7 +187,9 @@ function handleQuestionFiles() {
 
 function handleAnswerFiles() {
     if (document.getElementById('answerImageInput').files.length === 1) {
-        const selectedAnswerFile = document.getElementById('answerImageInput').files[0];
+        selectedAnswerFile = document.getElementById('answerImageInput').files[0];
+        selectedAnswerFileName = (+new Date()) + '-' + selectedAnswerFile.name;
+        selectedAnswerFileMetadata = {contentType: selectedAnswerFile.type};
         document.getElementById("answerImage").style.display = 'block';
         document.getElementById("answerImage").style.width = "20%";
         document.getElementById("answerImage").style.height = "20%";
@@ -172,4 +202,39 @@ function handleAnswerFiles() {
         answerFileValid = false;
         clearImages()
     }
+}
+
+function failed() {
+    uiDisabled(false);
+    //Push Failed
+    snackbar1.close();
+    snackbar2.labelText = "Uploading Data Failed";
+    snackbar2.open();
+}
+
+function pushData() {
+    firebase.database().ref('data').push({
+        exam: exam.value,
+        subject: subject.value,
+        chapter: chapter.value,
+        lesson: lesson.value,
+        topic: topic.value,
+        answerImageURL: answerImageUploadURL,
+        questionImageURL: questionImageUploadURL,
+        textFromQuestionImage: questionText.value
+    }, function (error) {
+        if (error) {
+            console.log('DatabaseTaskError');
+            console.log(error);
+            failed();
+        } else {
+            uiDisabled(false);
+            //Push Success
+            snackbar1.close();
+            snackbar2.labelText = "Data Uploaded Successfully";
+            snackbar2.open();
+            clearText();
+            clearImages();
+        }
+    });
 }
